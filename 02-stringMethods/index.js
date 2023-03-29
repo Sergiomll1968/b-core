@@ -96,6 +96,14 @@
 
 function esPalindromo(myString, config) {
 
+  if (!config) {
+    config = {
+      ignoreSpaces: true,
+      ignoreCaps: true,
+      ignoreAccents: true
+    };
+  }
+
   const specialChars = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u' };
 
   let reverseString;
@@ -123,15 +131,8 @@ function esPalindromo(myString, config) {
 
   console.log('Cadena modificada: ' + reverseString);
 
-  if (reverseString === myString) {
+  return reverseString === myString;
 
-    return true;
-
-  } else {
-
-    return false;
-
-  }
 }
 
 // const myString = 'atar a la rata';
