@@ -14,20 +14,25 @@ const peopleInWestSide = [
     weight: 60
   },
   {
+    name: 'pepe',
+    weight: 100
+  },
+  {
     name: 'paco',
     weight: 40
+  },
+  {
+    name: 'pepe',
+    weight: 100
   }
 ];
 
-let peopleInEastSide = [];
+const peopleInEastSide = [];
 
 let tripNumber = 1;
 
-let sortedPeopleInWestSide = peopleInWestSide.sort((a, b) => { return a.weight - b.weight; });
-
-console.log(boat);
-console.log(peopleInWestSide);
-console.log(sortedPeopleInWestSide);
+let sortedPeopleInWestSide = peopleInWestSide.sort((a, b) => a.weight - b.weight);
+console.log('sortedPeopleInWestSide: ', JSON.stringify(sortedPeopleInWestSide));
 
 while (sortedPeopleInWestSide.length) {
 
@@ -39,16 +44,26 @@ while (sortedPeopleInWestSide.length) {
     let indexInSortedPeopleInWestSide = 0;
     let weightToCharge = 0;
 
-    while (weightToCharge <= boat.maxWeight) {
+    while ((weightToCharge <= boat.maxWeight) || (tripNumber = 20)) {
 
-      weightToCharge += sortedPeopleInWestSide[0].weight;
-      let x = sortedPeopleInWestSide.shift();
-      peopleInEastSide.push(x);
-      // peopleInEastSide.push(sortedPeopleInWestSide.shift());
-      console.log('sortedPeopleInWestSide ', sortedPeopleInWestSide);
-      console.log('peopleInEastSide ', peopleInEastSide);
+      console.log('Entrando en segundo while');
+
+      while (sortedPeopleInWestSide.length) {
+
+      const nextPersonToBoat = sortedPeopleInWestSide.shift();
+      weightToCharge += nextPersonToBoat.weight;
+      console.log(weightToCharge);
+
+      console.log('nextPersonToBoat :', JSON.stringify(nextPersonToBoat));
+      peopleInEastSide.push(nextPersonToBoat);
+
+      console.log('sortedPeopleInWestSide: ', JSON.stringify(sortedPeopleInWestSide));
+      console.log('peopleInEastSide: ', JSON.stringify(peopleInEastSide));
       console.log('Cruza el de ' + peopleInEastSide[indexInSortedPeopleInWestSide].weight + ' kilos');
+
       indexInSortedPeopleInWestSide++;
+
+      }
 
     }
 
@@ -56,11 +71,15 @@ while (sortedPeopleInWestSide.length) {
 
   } else {
 
-    peopleInWestSide.unshift(peopleInEastSide.shift());
-    console.log('Vuelve el de ' + peopleInWestSide[0].weight + ' kilos');
+    sortedPeopleInWestSide.unshift(peopleInEastSide.shift());
+    console.log('Vuelve el de ' + sortedPeopleInWestSide[0].weight + ' kilos');
 
     boat.isInWestSide = true;
 
   }
+
+  console.log('Voy a salir del primer while');
+
+  sortedPeopleInWestSide = [];
 
 }
