@@ -1,0 +1,116 @@
+:root {
+  --cell: 50px;
+  --board: 500px;
+}
+
+.titleInfo {
+  color: #768d87;
+  font-size: 35px;
+  font-weight: bold;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.boardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.gameSpace {
+  display: grid;
+  grid-template-columns: var(--cell) var(--board);
+  grid-template-rows: var(--cell) var(--board);
+  gap: 5px 5px;
+}
+
+.gameInfo {
+  display: flex;
+  margin: auto;
+  margin-top: 10px;
+  width: 90%;
+  height: 100px;
+  justify-content: space-evenly;
+  align-items: center;
+
+}
+
+.columnNumbers {
+  display: grid;
+  grid-template-columns: repeat(10, var(--cell));
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.rowLetters {
+  display: grid;
+  grid-template-rows: repeat(10, var(--cell));
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.board1 {
+  display: grid;
+  grid-template-columns: repeat(10, var(--cell));
+  grid-template-rows: repeat(10, var(--cell));
+  justify-content: center;
+}
+
+.board2 {
+  display: grid;
+  grid-template-columns: repeat(10, var(--cell));
+  grid-template-rows: repeat(10, var(--cell));
+  justify-content: center;
+}
+
+.cell {
+  display: grid;
+  color: rgb(6, 39, 28);
+  border: 1px lime solid;
+  background-color: aquamarine;
+  width: var(--cell);
+  height: var(--cell);
+  align-content: center;
+  justify-content: center;
+}
+
+.button {
+  box-shadow: inset 0px 1px 3px 0px #91b8b3;
+  background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+  background-color: #768d87;
+  border-radius: 5px;
+  border: 1px solid #566963;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 11px 23px;
+}
+
+.button:hover {
+  background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+  background-color: #6c7c7c;
+}
+
+.turnInfo {
+  color: #768d87;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 11px 23px;
+  visibility: hidden;
+}
+
+.endGame {
+  color: #be0a0a;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 11px 23px;
+  visibility: hidden;
+}
+
+.shotsInfo {
+  color: #768d87;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 11px 23px;
+}
