@@ -3,6 +3,7 @@
   --board: 500px;
   margin: 0;
   padding: 0;
+  background-color: lightgray;
 }
 
 .titleInfo {
@@ -11,6 +12,32 @@
   font-weight: bold;
   padding: 10px 20px;
   text-align: center;
+}
+
+.mainPageContainer {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  grid-template-rows: 1fr 5fr;
+}
+
+.gameRulesTitle {
+  display: flex;
+  justify-content: center;
+}
+
+.gameRulesText {
+  display: flex;
+  justify-content: center;
+}
+
+.gameRulesContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.oponentNameContainer {
+  display: flex;
+  justify-content: center;
 }
 
 .subtitlesContainer {
@@ -83,7 +110,7 @@
   display: grid;
   color: rgb(6, 39, 28);
   border: 1px lime solid;
-  background-color: aquamarine;
+  background-color: rgb(10, 204, 139);
   width: var(--cell);
   height: var(--cell);
   align-content: center;

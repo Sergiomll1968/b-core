@@ -4,6 +4,8 @@ const root = document.getElementById('root');
 
 const maxRows = 10;
 const maxColumns = 10;
+let getOponentName = false;
+let oponentName = 'Pon aquí tu nombre';
 let playing = false;
 let numberOfShots = 0;
 let isComputerTurn = true;
@@ -72,6 +74,41 @@ const titleInfo = document.createElement('div');
 titleInfo.setAttribute('class', 'titleInfo');
 titleInfo.textContent = 'Juguemos a "hundir la flota"';
 root.appendChild(titleInfo);
+
+// Mostrar pagina principal con instrucciones y obtención del nombre del oponente
+
+const mainPageContainer = document.createElement('div');
+mainPageContainer.setAttribute('class', 'mainPageContainer');
+root.appendChild(mainPageContainer);
+
+const gameRulesTitle = document.createElement('div');
+gameRulesTitle.setAttribute('class','gameRulesTitle');
+gameRulesTitle.textContent = 'Instrucciones del juego';
+mainPageContainer.appendChild(gameRulesTitle);
+
+const gameRulesText = document.createElement('div');
+gameRulesText.setAttribute('class','gameRulesText');
+gameRulesText.textContent = 'Introduce tu nombre para jugar';
+mainPageContainer.appendChild(gameRulesText);
+
+const gameRulesContainer = document.createElement('div');
+gameRulesContainer.setAttribute('class', 'gameRulesContainer');
+gameRulesContainer.textContent = 'Lorem ipsum dolor sit amet consectetur';
+mainPageContainer.appendChild(gameRulesContainer);
+
+const oponentNameContainer = document.createElement('div');
+oponentNameContainer.setAttribute('class', 'oponentNameContainer');
+oponentNameContainer.textContent = 'Aqui va el cuadro de texto y un boton';
+mainPageContainer.appendChild(oponentNameContainer);
+
+
+
+do {
+
+  // Obtener nombre del oponente
+  oponentName = 'Sergio';
+
+} while (oponentName === 'Pon aquí tu nombre');
 
 // Creación de subtitulos del juego y asignación de estilos definidos en CSS
 
@@ -464,7 +501,7 @@ function playOponent(divToChange) {
 
       } else {
 
-        alert('¡¡¡ Buen tiro !!! ¡¡¡ Dispara otra vez !!!');
+        console.log('¡¡¡ Buen tiro !!! ¡¡¡ Dispara otra vez !!!');
 
       }
 
@@ -473,8 +510,8 @@ function playOponent(divToChange) {
       endGame();
 
     }
-  }
 
+  }
 
 }
 
@@ -534,6 +571,7 @@ function startGame() {
       playing = false;
 
     }
+
   }
 
 }
