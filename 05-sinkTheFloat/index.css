@@ -8,7 +8,7 @@
 
 .titleInfo {
   color: #768d87;
-  font-size: 35px;
+  font-size: 45px;
   font-weight: bold;
   padding: 10px 20px;
   text-align: center;
@@ -16,28 +16,43 @@
 
 .mainPageContainer {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
-  grid-template-rows: 1fr 5fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(7, auto);
 }
 
 .gameRulesTitle {
-  display: flex;
+  display: grid;
   justify-content: center;
+  margin: 10px;
+  color: red;
+  font-weight: bold;
+  font-size: 35px;
+}
+
+.playerNameTitle {
+  display: grid;
+  justify-content: center;
+  margin: 10px;
+  color: rgb(36, 136, 218);
+  font-weight: bold;
+  font-size: 35px;
 }
 
 .gameRulesText {
   display: flex;
-  justify-content: center;
+  margin: 10px;
+  font-weight: bold;
+  font-size: 16px;
 }
 
-.gameRulesContainer {
-  display: flex;
-  justify-content: center;
-}
-
-.oponentNameContainer {
-  display: flex;
-  justify-content: center;
+.playerNameInput {
+  display: grid;
+  padding: 50px;
+  grid-template-rows: repeat(6, 1fr);
+  grid-row: 2 / 9;
+  grid-column: 2 / 3;
+  justify-content: stretch;
+  margin: 10px;
 }
 
 .subtitlesContainer {
@@ -48,7 +63,7 @@
 .subtitleInfo {
   display: flex;
   margin: auto;
-  color:chocolate;
+  color: chocolate;
   font-size: 25px;
   font-weight: bold;
   padding: 10px 20px;
