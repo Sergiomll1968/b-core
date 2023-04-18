@@ -6,7 +6,10 @@ const maxRows = 10;
 const maxColumns = 10;
 let oponentName = 'Pon aquí tu nombre';
 let playing = false;
-let numberOfShots = 0;
+// let numberOfShots = 0;
+let numberOfComputerShots = 0;
+let numberOfOponentShots = 0;
+let numberOfTurns = 0;
 let isComputerTurn = true;
 let checkedBoard;
 
@@ -14,6 +17,8 @@ const water = 'O';
 const hit = 'X';
 
 let row, column, shot;
+
+const rowLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
 const initialComputerBoard = [
   ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
@@ -66,6 +71,10 @@ const gameOponentBoard = [
   [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
   [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 ];
+
+let history;
+const computerHistory = [];
+const oponentHistory = [];
 
 // Crear y mostrar titulo del juego y asignación de estilos definidos en CSS
 
@@ -154,7 +163,6 @@ nameInput.focus();
 
 const subtitlesContainer = document.createElement('div');
 subtitlesContainer.setAttribute('class', 'subtitlesContainer');
-// root.appendChild(subtitlesContainer);
 
 const subtitleInfo1 = document.createElement('div');
 subtitleInfo1.setAttribute('class', 'subtitleInfo');
@@ -163,14 +171,12 @@ subtitlesContainer.appendChild(subtitleInfo1);
 
 const subtitleInfo2 = document.createElement('div');
 subtitleInfo2.setAttribute('class', 'subtitleInfo');
-// subtitleInfo2.textContent = oponentName;
 subtitlesContainer.appendChild(subtitleInfo2);
 
 // Creación de los dos tableros en el DOM y asignación de estilos definidos en CSS
 
 const boardsContainer = document.createElement('div');
 boardsContainer.setAttribute('class', 'boardsContainer');
-// root.appendChild(boardsContainer);
 
 const gameSpace1 = document.createElement('div');
 gameSpace1.setAttribute('class', 'gameSpace');
@@ -206,8 +212,6 @@ gameSpace2.appendChild(board2);
 
 // Creación de las columnas de letras y filas de numeros de los tableros de juego
 
-const rowLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-
 for (let i = 0; i < 10; i++) {
 
   const rowLetterDiv1 = document.createElement('div');
@@ -239,7 +243,6 @@ for (let i = 0; i < 100; i++) {
   const divBoard1 = document.createElement('div');
   divBoard1.setAttribute('class', 'cell');
   divBoard1.setAttribute('id', `board1Id${i}`);
-  divBoard1.addEventListener('click', clickedCell);
   board1.appendChild(divBoard1);
 
   const divBoard2 = document.createElement('div');
@@ -254,7 +257,6 @@ for (let i = 0; i < 100; i++) {
 
 const gameInfo = document.createElement('div');
 gameInfo.setAttribute('class', 'gameInfo');
-// root.appendChild(gameInfo);
 
 const startGameButton = document.createElement('button');
 startGameButton.setAttribute('class', 'button');
@@ -264,66 +266,56 @@ gameInfo.appendChild(startGameButton);
 
 const turnInfo = document.createElement('p');
 turnInfo.setAttribute('class', 'turnInfo');
-// turnInfo.textContent = `Turno de: ${isComputerTurn ? 'Ordenador' : oponentName}`;
 gameInfo.appendChild(turnInfo);
 
 const shotsInfo = document.createElement('p');
 shotsInfo.setAttribute('class', 'shotsInfo');
-shotsInfo.textContent = `Número de jugadas: ${numberOfShots}`;
+// shotsInfo.textContent = `Número de jugadas: ${numberOfShots}`;
+shotsInfo.textContent = `Número de jugadas: ${numberOfTurns}`;
 gameInfo.appendChild(shotsInfo);
 
 // Crear y mostrar pagina de resultados al terminar el juego
 
-// const mainPageContainer = document.createElement('div');
-// mainPageContainer.setAttribute('class', 'mainPageContainer');
-// root.appendChild(mainPageContainer);
+const resultsContainer = document.createElement('div');
+resultsContainer.setAttribute('class', 'mainPageContainer');
 
-// const gameRulesTitle = document.createElement('div');
-// gameRulesTitle.setAttribute('class', 'gameRulesTitle');
-// gameRulesTitle.textContent = 'Instrucciones del juego';
-// mainPageContainer.appendChild(gameRulesTitle);
+const computerNameTitle = document.createElement('div');
+computerNameTitle.setAttribute('class', 'gameRulesTitle');
+computerNameTitle.textContent = 'Ordenador';
+resultsContainer.appendChild(computerNameTitle);
 
-// const playerNameTitle = document.createElement('div');
-// playerNameTitle.setAttribute('class', 'playerNameTitle');
-// playerNameTitle.textContent = 'Introduce tu nombre para jugar';
-// mainPageContainer.appendChild(playerNameTitle);
+const oponentNameTitle = document.createElement('div');
+oponentNameTitle.setAttribute('class', 'playerNameTitle');
+resultsContainer.appendChild(oponentNameTitle);
 
-// const gameRulesText1 = document.createElement('div');
-// gameRulesText1.setAttribute('class', 'gameRulesText');
-// gameRulesText1.textContent = '1.- El juego consiste en hundir la flota del contrincante. Para ello, debe colocar su propia flota de forma estratégica y encontrar y hundir con los disparos la flota contraria.';
-// mainPageContainer.appendChild(gameRulesText1);
+const resultsText11 = document.createElement('div');
+resultsText11.setAttribute('class', 'gameRulesText');
+resultsText11.textContent = 'Movimientos realizados';
+resultsContainer.appendChild(resultsText11);
 
-// const playerNameInput = document.createElement('div');
-// playerNameInput.setAttribute('class', 'playerNameInput');
+const resultsText21 = document.createElement('div');
+resultsText21.setAttribute('class', 'gameRulesText');
+resultsText21.textContent = 'Movimientos realizados';
+resultsContainer.appendChild(resultsText21);
 
-// const nameInput = document.createElement('input');
-// nameInput.setAttribute('type', 'text');
-// nameInput.setAttribute('name', 'name');
-// nameInput.addEventListener('keypress', checkTypedText);
-// nameInput.setAttribute('placeholder', oponentName);
+const resultsText12 = document.createElement('div');
+resultsText12.setAttribute('class', 'resultsText');
+resultsText12.textContent = computerHistory;
+resultsContainer.appendChild(resultsText12);
 
-// const buttonValidate = document.createElement('input');
-// buttonValidate.setAttribute('type', 'submit');
-// buttonValidate.setAttribute('value', 'Validar');
-// buttonValidate.addEventListener('click', validateInputName);
+const resultsText22 = document.createElement('div');
+resultsText22.setAttribute('class', 'resultsText');
+resultsContainer.appendChild(resultsText22);
 
-// mainPageContainer.appendChild(playerNameInput);
-// playerNameInput.appendChild(nameInput);
-// playerNameInput.appendChild(buttonValidate);
+const resetGameContainer = document.createElement('div');
+resetGameContainer.setAttribute('class', 'resetGameContainer');
+const resetGameButton = document.createElement('button');
+resetGameButton.setAttribute('class', 'button');
+resetGameButton.innerHTML = 'Resetear juego';
+resetGameButton.addEventListener('click', resetGame);
+resetGameContainer.appendChild(resetGameButton);
 
-// const gameRulesText2 = document.createElement('div');
-// gameRulesText2.setAttribute('class', 'gameRulesText');
-// gameRulesText2.textContent = '2.- Cada uno de los jugadores dispone de dos cuadrículas que ocultará al otro jugador: en una debe colocar sus barcos y en la otra irá anotando los resultados de los disparos que realiza en cada turno. En la página siguiente dispone de plantillas de las cuadrículas.';
-// mainPageContainer.appendChild(gameRulesText2);
-
-// const gameRulesText3 = document.createElement('div');
-// gameRulesText3.setAttribute('class', 'gameRulesText');
-// gameRulesText3.textContent = '3.- Cada jugador debe colocar en uno de los cuadros los siguientes barcos en posición horizontal o vertical: 1 barco que ocupa 5 cuadrados, otro de 4, otro de 3, otro de 2 y otro de 1';
-// mainPageContainer.appendChild(gameRulesText3);
-
-// nameInput.focus();
-
-// Función que valida que se introduzca un nombre de oponente y si es asi, cambia a la pantalla de juego
+// Funciones que valida que se introduzca un nombre de oponente y si es asi, cambia a la pantalla de juego
 
 function validateName() {
 
@@ -335,7 +327,6 @@ function validateName() {
     root.appendChild(boardsContainer);
     root.appendChild(gameInfo);
 
-    // nameInput.setAttribute('placeholder', oponentName);
     subtitleInfo2.textContent = oponentName;
     turnInfo.textContent = `Turno de: ${isComputerTurn ? 'Ordenador' : oponentName}`;
 
@@ -392,12 +383,23 @@ function checkTop(row, column) {
       displayShot(divToChange, hit);
       if (column !== 0) gameOponentBoard[row][column - 1] = water;
       if (column !== maxColumns - 1) gameOponentBoard[row][column + 1] = water;
-      numberOfShots++;
+      // numberOfShots++;
+      numberOfComputerShots++;
+
+      history = [numberOfTurns, numberOfComputerShots, rowLetters[row], column + 1, 'Tocado'];
+      computerHistory.push(history);
 
       checkTop(row - 1, column);
 
+      return true;
     }
+
+    return false;
+
   }
+
+  return true;
+
 }
 
 function checkDown(row, column) {
@@ -414,12 +416,24 @@ function checkDown(row, column) {
       displayShot(divToChange, hit);
       if (column !== 0) gameOponentBoard[row][column - 1] = water;
       if (column !== maxColumns - 1) gameOponentBoard[row][column + 1] = water;
-      numberOfShots++;
+      // numberOfShots++;
+      numberOfComputerShots++;
+
+      history = [numberOfTurns, numberOfComputerShots, rowLetters[row], column + 1, 'Tocado'];
+      computerHistory.push(history);
 
       checkDown(row + 1, column);
 
+      return true;
+
     }
+
+    return false;
+
   }
+
+  return true;
+
 }
 
 function checkLeft(row, column) {
@@ -435,12 +449,24 @@ function checkLeft(row, column) {
 
       displayShot(divToChange, hit);
       if (row !== 0) gameOponentBoard[row - 1][column] = water;
-      numberOfShots++;
+      // numberOfShots++;
+      numberOfComputerShots++;
+
+      history = [numberOfTurns, numberOfComputerShots, rowLetters[row], column + 1, 'Tocado'];
+      computerHistory.push(history);
 
       checkLeft(row, column - 1);
 
+      return true;
+
     }
+
+    return false;
+
   }
+
+  return true;
+
 }
 
 function checkRight(row, column) {
@@ -457,12 +483,24 @@ function checkRight(row, column) {
       displayShot(divToChange, hit);
       if (row !== 0) gameOponentBoard[row - 1][column] = water;
       if (row != maxRows - 1) gameOponentBoard[row + 1][column] = water;
-      numberOfShots++;
+      // numberOfShots++;
+      numberOfComputerShots++;
+
+      history = [numberOfTurns, numberOfComputerShots, rowLetters[row], column + 1, 'Tocado'];
+      computerHistory.push(history);
 
       checkRight(row, column + 1);
 
+      return true;
+
     }
+
+    return false;
+
   }
+
+  return true;
+
 }
 
 function displayShot(divToChange, shot) {
@@ -557,17 +595,28 @@ function playComputer() {
   const div = coordinatesToId(row, column);
   const divToChange = document.getElementById(div);
 
-  numberOfShots++;
-  shotsInfo.textContent = `Número de jugadas: ${numberOfShots}`;
+  // numberOfShots++;
+  numberOfComputerShots++;
+  numberOfTurns++;
+  // shotsInfo.textContent = `Número de jugadas: ${numberOfShots}`;
+  shotsInfo.textContent = `Número de jugadas: ${numberOfTurns}`;
+
+  // history = [numberOfShots,rowLetters[row],column+1,(shot === 'O') ? 'Agua' : 'Tocado'];
+  history = [numberOfTurns, numberOfComputerShots, rowLetters[row], column + 1, (shot === 'O') ? 'Agua' : 'Tocado'];
+  computerHistory.push(history);
 
   if (shot === hit) {
 
     gameOponentBoard[row][column] = hit;
     displayShot(divToChange, hit);
-    checkTop(row - 1, column);
-    checkDown(row + 1, column);
-    checkRight(row, column + 1);
-    checkLeft(row, column - 1);
+
+    if (checkTop(row - 1, column)) {
+      if (checkDown(row + 1, column)) {
+        if (checkRight(row, column + 1)) {
+          checkLeft(row, column - 1);
+        }
+      }
+    }
 
   } else {
 
@@ -594,8 +643,6 @@ function playComputer() {
 
 function playOponent(divToChange) {
 
-  // console.log('Turno de ' + oponentName);
-
   const divToChangeId = divToChange.id;
 
   const divToChangeIdNumber = divToChangeId.split('').slice(8, divToChangeId.length).join('');
@@ -620,6 +667,12 @@ function playOponent(divToChange) {
 
     shot = initialComputerBoard[row][column];
 
+    numberOfOponentShots++;
+
+    // history = [numberOfShots,rowLetters[row],column+1,(shot === 'O') ? 'Agua' : 'Tocado'];
+    history = [numberOfTurns, numberOfOponentShots, rowLetters[row], column + 1, (shot === 'O') ? 'Agua' : 'Tocado'];
+    oponentHistory.push(history);
+
     if (shot === hit) {
 
       gameComputerBoard[row][column] = hit;
@@ -641,8 +694,7 @@ function playOponent(divToChange) {
         isComputerTurn = !isComputerTurn;
         turnInfo.textContent = `Turno de: ${isComputerTurn ? 'Ordenador' : oponentName}`;
 
-        // for (let i = 0; i < 5000000; i++) {
-        // }
+        // Aquí me gustaría simular un tiempo de pausa para el ordenador
 
         playComputer();
 
@@ -669,11 +721,20 @@ function resetBoards() {
     document.getElementById(`board1Id${i}`).textContent = '';
     document.getElementById(`board1Id${i}`).style.backgroundImage = '';
     document.getElementById(`board1Id${i}`).style.transform = 'scale(1)';
+
     document.getElementById(`board2Id${i}`).textContent = '';
     document.getElementById(`board2Id${i}`).style.backgroundImage = '';
     document.getElementById(`board2Id${i}`).style.transform = 'scale(1)';
-    numberOfShots = 0;
-    shotsInfo.textContent = `Número de jugadas: ${numberOfShots}`;
+
+    // numberOfShots = 0;
+    numberOfTurns = 0;
+    numberOfComputerShots = 0;
+    numberOfOponentShots = 0;
+    // history = [];
+    // computerHistory = [];
+    // oponentHistory = [];
+    // shotsInfo.textContent = `Número de jugadas: ${numberOfShots}`;
+    shotsInfo.textContent = `Número de jugadas: ${numberOfTurns}`;
 
   }
 
@@ -690,6 +751,36 @@ function resetBoards() {
 
 }
 
+// Función de mostrar estadísticas del juego
+
+function showResults() {
+
+  computerHistory.forEach(
+
+    (element) => {
+
+      const div = document.createElement('p');
+      div.textContent = `Turno: ${element[0]}, Disp nº: ${element[1]}, Casilla: ${element[2]}${element[3]}, Tipo: ${element[4]}`;
+      resultsText12.appendChild(div);
+
+    }
+
+  );
+
+  oponentHistory.forEach(
+
+    (element) => {
+
+      const div = document.createElement('p');
+      div.textContent = `Turno: ${element[0]}, Disp nº: ${element[1]}, Casilla: ${element[2]}${element[3]}, Tipo: ${element[4]}`;
+      resultsText22.appendChild(div);
+
+    }
+
+  );
+
+}
+
 // Función de entrada al juego
 
 function startGame() {
@@ -703,14 +794,19 @@ function startGame() {
 
   } else {
 
-    if ((turnInfo.innerHTML === 'Juego terminado') && (!playing)) {
+    if ((turnInfo.innerHTML.substring(0, 15) === 'Juego terminado') && (!playing)) {
 
-      startGameButton.innerHTML = 'Iniciar juego';
-      turnInfo.setAttribute('class', 'turnInfo');
-      turnInfo.innerHTML = 'Ordenador';
-      turnInfo.style.visibility = 'hidden';
       resetBoards();
-      isComputerTurn = true;
+      root.removeChild(subtitlesContainer);
+      root.removeChild(boardsContainer);
+      root.removeChild(gameInfo);
+      root.appendChild(resultsContainer);
+
+      oponentNameTitle.textContent = oponentName;
+
+      showResults();
+
+      root.appendChild(resetGameContainer);
 
     } else {
 
@@ -727,6 +823,28 @@ function startGame() {
 
 }
 
+// Función de reseteo de juego
+
+function resetGame() {
+
+  numberOfTurns = 0;
+  numberOfComputerShots = 0;
+  numberOfOponentShots = 0;
+  // history = null;
+  // computerHistory = null;
+  // oponentHistory = null;
+
+  root.removeChild(resultsContainer);
+  root.removeChild(resetGameContainer);
+  root.appendChild(mainPageContainer);
+  startGameButton.innerHTML = 'Iniciar juego';
+  startGameButton.classList.remove('results');
+  nameInput.textContent = '';
+  nameInput.focus();
+  isComputerTurn = true;
+
+}
+
 // Función de fin de juego
 
 function endGame() {
@@ -735,5 +853,7 @@ function endGame() {
   turnInfo.setAttribute('class', 'endGame');
   const endGameInfo = (checkedBoard === oponentName) ? 'ordenador' : oponentName;
   turnInfo.innerHTML = 'Juego terminado - Gana ' + endGameInfo;
+  startGameButton.innerHTML = 'Ver estadísticas';
+  startGameButton.classList.add('results');
 
 }
