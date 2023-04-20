@@ -72,9 +72,9 @@ const gameOponentBoard = [
   [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 ];
 
-let history;
-const computerHistory = [];
-const oponentHistory = [];
+let history = [];
+let computerHistory = [];
+let oponentHistory = [];
 
 // Crear y mostrar titulo del juego y asignación de estilos definidos en CSS
 
@@ -730,9 +730,9 @@ function resetBoards() {
     numberOfTurns = 0;
     numberOfComputerShots = 0;
     numberOfOponentShots = 0;
-    // history = [];
-    // computerHistory = [];
-    // oponentHistory = [];
+    history = [];
+    computerHistory = [];
+    oponentHistory = [];
     // shotsInfo.textContent = `Número de jugadas: ${numberOfShots}`;
     shotsInfo.textContent = `Número de jugadas: ${numberOfTurns}`;
 
@@ -779,6 +779,10 @@ function showResults() {
 
   );
 
+  // history = [];
+  // computerHistory = [];
+  // oponentHistory = [];
+
 }
 
 // Función de entrada al juego
@@ -797,6 +801,10 @@ function startGame() {
     if ((turnInfo.innerHTML.substring(0, 15) === 'Juego terminado') && (!playing)) {
 
       resetBoards();
+      numberOfTurns = 0;
+      numberOfComputerShots = 0;
+      numberOfOponentShots = 0;
+
       root.removeChild(subtitlesContainer);
       root.removeChild(boardsContainer);
       root.removeChild(gameInfo);
@@ -808,12 +816,22 @@ function startGame() {
 
       root.appendChild(resetGameContainer);
 
+      history = [];
+      computerHistory = [];
+      oponentHistory = [];
+
     } else {
 
       startGameButton.innerHTML = 'Iniciar juego';
       turnInfo.innerHTML = 'Ordenador';
       turnInfo.style.visibility = 'hidden';
       resetBoards();
+      numberOfTurns = 0;
+      numberOfComputerShots = 0;
+      numberOfOponentShots = 0;
+      history = [];
+      computerHistory = [];
+      oponentHistory = [];
       isComputerTurn = true;
       playing = false;
 
@@ -827,9 +845,9 @@ function startGame() {
 
 function resetGame() {
 
-  numberOfTurns = 0;
-  numberOfComputerShots = 0;
-  numberOfOponentShots = 0;
+  // numberOfTurns = 0;
+  // numberOfComputerShots = 0;
+  // numberOfOponentShots = 0;
   // history = null;
   // computerHistory = null;
   // oponentHistory = null;
@@ -841,7 +859,7 @@ function resetGame() {
   startGameButton.classList.remove('results');
   nameInput.textContent = '';
   nameInput.focus();
-  isComputerTurn = true;
+  // isComputerTurn = true;
 
 }
 

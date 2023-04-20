@@ -1,0 +1,198 @@
+:root {
+  --cell: 50px;
+  --board: 500px;
+  margin: 0;
+  padding: 0;
+  background-color: lightgray;
+}
+
+.gameTitle {
+  color: #768d87;
+  font-size: 45px;
+  font-weight: bold;
+  padding: 20px 20px;
+  text-align: center;
+}
+
+.mainPageContainer {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.gameflag {
+  display: grid;
+  grid-row: 1 / 4;
+  justify-content: center;
+  margin: 10px;
+  color: red;
+  font-weight: bold;
+  font-size: 35px;
+}
+
+.countryInputtext {
+  display: grid;
+  grid-row: 1;
+  justify-content: center;
+  margin: 10px;
+  color: rgb(36, 136, 218);
+  font-weight: bold;
+  font-size: 35px;
+}
+
+.item3 {
+  grid-row: 2;
+}
+
+
+
+.gameRulesText {
+  display: flex;
+  margin: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.playerNameInput {
+  display: grid;
+  padding: 50px;
+  grid-template-rows: repeat(6, 1fr);
+  grid-row: 2 / 9;
+  grid-column: 2 / 3;
+  justify-content: stretch;
+  margin: 10px;
+}
+
+.subtitlesContainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.subtitleInfo {
+  display: flex;
+  margin: auto;
+  color: chocolate;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 10px 20px;
+}
+
+.boardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.gameSpace {
+  display: grid;
+  grid-template-columns: var(--cell) var(--board);
+  grid-template-rows: var(--cell) var(--board);
+  gap: 5px 5px;
+}
+
+.gameInfo {
+  display: flex;
+  margin: auto;
+  margin-top: 10px;
+  width: 90%;
+  height: 100px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.columnNumbers {
+  display: grid;
+  grid-template-columns: repeat(10, var(--cell));
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.rowLetters {
+  display: grid;
+  grid-template-rows: repeat(10, var(--cell));
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.board1 {
+  display: grid;
+  grid-template-columns: repeat(10, var(--cell));
+  grid-template-rows: repeat(10, var(--cell));
+  justify-content: center;
+}
+
+.board2 {
+  display: grid;
+  grid-template-columns: repeat(10, var(--cell));
+  grid-template-rows: repeat(10, var(--cell));
+  justify-content: center;
+}
+
+.cell {
+  display: grid;
+  color: rgb(6, 39, 28);
+  border: 1px lime solid;
+  background-color: rgb(10, 204, 139);
+  width: var(--cell);
+  height: var(--cell);
+  align-content: center;
+  justify-content: center;
+}
+
+.button {
+  box-shadow: inset 0px 1px 3px 0px #91b8b3;
+  background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+  /* background-color: #768d87; */
+  border-radius: 5px;
+  border: 1px solid #566963;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 11px 23px;
+}
+
+.results {
+  background: linear-gradient(to bottom, #f0b6b6 5%, #f16b82 100%);
+}
+
+.resultsText {
+  display: grid;
+  margin: 0px;
+  padding: 0px;;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.resetGameContainer {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+
+.button:hover {
+  background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+  background-color: #6c7c7c;
+}
+
+.turnInfo {
+  color: #768d87;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 11px 23px;
+  visibility: hidden;
+}
+
+.endGame {
+  color: #be0a0a;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 11px 23px;
+  visibility: hidden;
+}
+
+.shotsInfo {
+  color: #768d87;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 11px 23px;
+}
