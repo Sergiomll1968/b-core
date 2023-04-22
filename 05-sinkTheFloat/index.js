@@ -6,7 +6,6 @@ const maxRows = 10;
 const maxColumns = 10;
 let oponentName = 'Pon aquí tu nombre';
 let playing = false;
-// let numberOfShots = 0;
 let numberOfComputerShots = 0;
 let numberOfOponentShots = 0;
 let numberOfTurns = 0;
@@ -270,7 +269,6 @@ gameInfo.appendChild(turnInfo);
 
 const shotsInfo = document.createElement('p');
 shotsInfo.setAttribute('class', 'shotsInfo');
-// shotsInfo.textContent = `Número de jugadas: ${numberOfShots}`;
 shotsInfo.textContent = `Número de jugadas: ${numberOfTurns}`;
 gameInfo.appendChild(shotsInfo);
 
@@ -383,7 +381,6 @@ function checkTop(row, column) {
       displayShot(divToChange, hit);
       if (column !== 0) gameOponentBoard[row][column - 1] = water;
       if (column !== maxColumns - 1) gameOponentBoard[row][column + 1] = water;
-      // numberOfShots++;
       numberOfComputerShots++;
 
       history = [numberOfTurns, numberOfComputerShots, rowLetters[row], column + 1, 'Tocado'];
@@ -416,7 +413,6 @@ function checkDown(row, column) {
       displayShot(divToChange, hit);
       if (column !== 0) gameOponentBoard[row][column - 1] = water;
       if (column !== maxColumns - 1) gameOponentBoard[row][column + 1] = water;
-      // numberOfShots++;
       numberOfComputerShots++;
 
       history = [numberOfTurns, numberOfComputerShots, rowLetters[row], column + 1, 'Tocado'];
@@ -449,7 +445,6 @@ function checkLeft(row, column) {
 
       displayShot(divToChange, hit);
       if (row !== 0) gameOponentBoard[row - 1][column] = water;
-      // numberOfShots++;
       numberOfComputerShots++;
 
       history = [numberOfTurns, numberOfComputerShots, rowLetters[row], column + 1, 'Tocado'];
@@ -483,7 +478,6 @@ function checkRight(row, column) {
       displayShot(divToChange, hit);
       if (row !== 0) gameOponentBoard[row - 1][column] = water;
       if (row != maxRows - 1) gameOponentBoard[row + 1][column] = water;
-      // numberOfShots++;
       numberOfComputerShots++;
 
       history = [numberOfTurns, numberOfComputerShots, rowLetters[row], column + 1, 'Tocado'];
@@ -517,7 +511,7 @@ function displayShot(divToChange, shot) {
 
   divToChange.style.backgroundSize = 'cover';
   divToChange.style.transition = '0.75s ease';
-  divToChange.style.transform = 'scale(1.5)';
+  divToChange.style.transform = 'scale(1.7)';
 
   if (shot === hit) {
 
@@ -526,7 +520,6 @@ function displayShot(divToChange, shot) {
     playSound('sounds/boom.mp3');
     divToChange.style.backgroundImage = 'url("images/fire.jpg")';
     divToChange.style.transform = 'scale(.9)';
-    // divToChange.innerHTML = '<img src="images/fire.jpg" width=50px height=50px>';
 
   } else {
 
@@ -535,7 +528,6 @@ function displayShot(divToChange, shot) {
     // playSound('sounds/water.mp3');
     divToChange.style.backgroundImage = 'url("images/water.jpg")';
     divToChange.style.transform = 'scale(.9)';
-    // divToChange.innerHTML = '<img src="images/water.jpg" width=50px height=50px>';
 
   }
 
@@ -595,13 +587,10 @@ function playComputer() {
   const div = coordinatesToId(row, column);
   const divToChange = document.getElementById(div);
 
-  // numberOfShots++;
   numberOfComputerShots++;
   numberOfTurns++;
-  // shotsInfo.textContent = `Número de jugadas: ${numberOfShots}`;
   shotsInfo.textContent = `Número de jugadas: ${numberOfTurns}`;
 
-  // history = [numberOfShots,rowLetters[row],column+1,(shot === 'O') ? 'Agua' : 'Tocado'];
   history = [numberOfTurns, numberOfComputerShots, rowLetters[row], column + 1, (shot === 'O') ? 'Agua' : 'Tocado'];
   computerHistory.push(history);
 
@@ -669,7 +658,6 @@ function playOponent(divToChange) {
 
     numberOfOponentShots++;
 
-    // history = [numberOfShots,rowLetters[row],column+1,(shot === 'O') ? 'Agua' : 'Tocado'];
     history = [numberOfTurns, numberOfOponentShots, rowLetters[row], column + 1, (shot === 'O') ? 'Agua' : 'Tocado'];
     oponentHistory.push(history);
 
@@ -726,14 +714,12 @@ function resetBoards() {
     document.getElementById(`board2Id${i}`).style.backgroundImage = '';
     document.getElementById(`board2Id${i}`).style.transform = 'scale(1)';
 
-    // numberOfShots = 0;
     numberOfTurns = 0;
     numberOfComputerShots = 0;
     numberOfOponentShots = 0;
-    history = [];
-    computerHistory = [];
-    oponentHistory = [];
-    // shotsInfo.textContent = `Número de jugadas: ${numberOfShots}`;
+    // history = [];
+    // computerHistory = [];
+    // oponentHistory = [];
     shotsInfo.textContent = `Número de jugadas: ${numberOfTurns}`;
 
   }
@@ -816,9 +802,9 @@ function startGame() {
 
       root.appendChild(resetGameContainer);
 
-      history = [];
-      computerHistory = [];
-      oponentHistory = [];
+      // history = [];
+      // computerHistory = [];
+      // oponentHistory = [];
 
     } else {
 
@@ -845,12 +831,12 @@ function startGame() {
 
 function resetGame() {
 
-  // numberOfTurns = 0;
-  // numberOfComputerShots = 0;
-  // numberOfOponentShots = 0;
-  // history = null;
-  // computerHistory = null;
-  // oponentHistory = null;
+  numberOfTurns = 0;
+  numberOfComputerShots = 0;
+  numberOfOponentShots = 0;
+  history = [];
+  computerHistory = [];
+  oponentHistory = [];
 
   root.removeChild(resultsContainer);
   root.removeChild(resetGameContainer);
@@ -859,7 +845,7 @@ function resetGame() {
   startGameButton.classList.remove('results');
   nameInput.textContent = '';
   nameInput.focus();
-  // isComputerTurn = true;
+  turnInfo.style.visibility = 'hidden';
 
 }
 
