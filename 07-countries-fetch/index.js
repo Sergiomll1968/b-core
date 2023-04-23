@@ -2,7 +2,6 @@
 async function getCountries() {
   const response = await fetch('https://restcountries.com/v3.1/independent?status=true');
   const data = await response.json();
-  // console.log(data.length);
   return data;
 }
 
@@ -11,8 +10,6 @@ function getRandomNumber(min, max) {
   return randomNumber;
 }
 
-
-
 async function initApp() {
 
   let playing = true;
@@ -20,7 +17,6 @@ async function initApp() {
   let country = [];
   let clues = [];
   let clueCounter = 0;
-
 
   function validateCountryName() {
 
@@ -40,6 +36,10 @@ async function initApp() {
 
       }
 
+      nameInput.disabled = true;
+      buttonValidate.disabled = true;
+      clueButton.disabled = true;
+      playing = false;
     }
 
   }
@@ -80,9 +80,12 @@ async function initApp() {
     return data;
   }
 
-  function getSpanishName(name) {
-    // traducir country.name.common y devolverlo traducido
-    return name;
+  async function getSpanishName(name) {
+  
+    const response = await fetch(`https://api.mymemory.translated.net/get?q=${name}&langpair=en|es`);
+    const data = await response.json();
+    return data.responseData.translatedText;
+  
   }
 
   async function getCluesList(country) {
@@ -92,35 +95,59 @@ async function initApp() {
     const borderPromises = [];
 
     clues.push(`Número de habitantes: ${country.population}`);
-    clues.push(`Continente: ${getSpanishName(country.continents[0])}`);
-    clues.push(`Moneda: ${getSpanishName(Object.values(country.currencies)[0].name)}`);
+    clues.push(`Continente: ${await getSpanishName(country.continents[0])}`);
+    clues.push(`Moneda: ${await getSpanishName(Object.values(country.currencies)[0].name)}`);
 
-    country.borders.forEach((border) => {
+    if (country.borders) {
 
-      try {
+      country.borders.forEach((border) => {
 
-        borderPromise = getBorderName(border);
-        borderPromises.push(borderPromise);
+        try {
 
-      } catch (error) {
+          borderPromise = getBorderName(border);
+          borderPromises.push(borderPromise);
 
-        console.error('Error al obtener la información de países.');
+        } catch (error) {
 
-      }
+          console.error('Error al obtener la información de países.');
 
-    });
+        }
 
-    const borderCountries = await Promise.all(borderPromises);
+      });
 
-    const borderNames = [];
-    borderCountries.forEach((country) => {
-      borderNames.push(country[0].translations.spa.common);
-    });
+      const borderCountries = await Promise.all(borderPromises);
 
-    clues.push(`Tiene frontera con: ${borderNames}`);
-    clues.push(`Capital: ${getSpanishName(country.capital[0])}`);
+      const borderNames = [];
+      borderCountries.forEach((country) => {
+        borderNames.push(country[0].translations.spa.common);
+      });
+
+      clues.push(`Tiene frontera con: ${borderNames}`);
+
+    } else {
+
+      clues.push('Este país no tiene fronteras con ninguno otro.');
+
+    }
+
+    clues.push(`Capital: ${await getSpanishName(country.capital[0])}`);
 
     return clues;
+
+  }
+
+  function resetGame() {
+
+    // congratulationsContainer.style.visibility = 'hidden';
+    congratulationsContainer.style.display = 'none';
+    gameTitle.style.display = 'none';
+    mainPageContainer.style.display = 'none';
+    nameInput.innerText = '';
+    nameInput.disabled = false;
+    buttonValidate.disabled = false;
+    clueButton.disabled = false;
+    initApp();
+
   }
 
   const root = document.getElementById('root');
@@ -188,7 +215,18 @@ async function initApp() {
   congratulationsContainer.appendChild(congratulationsImage);
 
   const congratulationsText = document.createElement('div');
+  congratulationsText.setAttribute('class', 'congratulationsText');
   congratulationsContainer.appendChild(congratulationsText);
+
+  const gameInfo = document.createElement('div');
+
+  const resetGameButton = document.createElement('button');
+  resetGameButton.setAttribute('class', 'button');
+  resetGameButton.innerHTML = 'Reiniciar juego';
+  resetGameButton.addEventListener('click', resetGame);
+  gameInfo.appendChild(resetGameButton);
+
+  congratulationsContainer.appendChild(gameInfo);
 
   nameInput.focus();
 
@@ -203,9 +241,9 @@ async function initApp() {
   }
 
   country = countries[getRandomNumber(0, countries.length)];
-  const englishCountryNameToGuess = country.name.common;
+  // const englishCountryNameToGuess = country.name.common;
   const spanishCountryNameToGuess = country.translations.spa.common;
-  console.log(englishCountryNameToGuess);
+  // console.log(englishCountryNameToGuess);
   console.log(spanishCountryNameToGuess);
 
   gameflag.setAttribute('src', `${country.flags.png}`);
@@ -216,9 +254,3 @@ async function initApp() {
 }
 
 initApp();
-
-do {
-
-  playing = false;
-
-} while (playing);
