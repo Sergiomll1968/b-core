@@ -746,6 +746,7 @@ function showResults() {
     (element) => {
 
       const div = document.createElement('p');
+      div.classList.add('resultsTextP');
       div.textContent = `Turno: ${element[0]}, Disp nº: ${element[1]}, Casilla: ${element[2]}${element[3]}, Tipo: ${element[4]}`;
       resultsText12.appendChild(div);
 
@@ -758,6 +759,7 @@ function showResults() {
     (element) => {
 
       const div = document.createElement('p');
+      div.classList.add('resultsTextP');
       div.textContent = `Turno: ${element[0]}, Disp nº: ${element[1]}, Casilla: ${element[2]}${element[3]}, Tipo: ${element[4]}`;
       resultsText22.appendChild(div);
 
