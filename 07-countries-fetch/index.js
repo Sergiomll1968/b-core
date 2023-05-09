@@ -81,11 +81,11 @@ async function initApp() {
   }
 
   async function getSpanishName(name) {
-  
+
     const response = await fetch(`https://api.mymemory.translated.net/get?q=${name}&langpair=en|es`);
     const data = await response.json();
     return data.responseData.translatedText;
-  
+
   }
 
   async function getCluesList(country) {
@@ -241,7 +241,7 @@ async function initApp() {
   }
 
   country = countries[getRandomNumber(0, countries.length)];
-  // const englishCountryNameToGuess = country.name.common;
+  const englishCountryNameToGuess = country.name.common;
   const spanishCountryNameToGuess = country.translations.spa.common;
   // console.log(englishCountryNameToGuess);
   console.log(spanishCountryNameToGuess);
